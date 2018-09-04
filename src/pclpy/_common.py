@@ -27,19 +27,19 @@ def _concatenatePointCloud( cloud1, cloud2 ):
 
 	return pyWrapper._from_cpp( _cloudOut, PointCloud2 )
 
-def concatenateFields( cloud1, cloud2 ):
-	if not isinstance( cloud1, PointCloud2 ):
-		rospy.ROSException( 'Argument1 is not PointCloud2' )
-	if not isinstance( cloud2, PointCloud2 ):
-		rospy.ROSException( 'Argument2 is not PointCloud2' )
+#def concatenateFields( cloud1, cloud2 ):
+#	if not isinstance( cloud1, PointCloud2 ):
+#		rospy.ROSException( 'Argument1 is not PointCloud2' )
+#	if not isinstance( cloud2, PointCloud2 ):
+#		rospy.ROSException( 'Argument2 is not PointCloud2' )
 
-	_cloud1 = pyWrapper._to_cpp( cloud1 )
-	_cloud2 = pyWrapper._to_cpp( cloud2 )
+#	_cloud1 = pyWrapper._to_cpp( cloud1 )
+#	_cloud2 = pyWrapper._to_cpp( cloud2 )
 
-	_cloudOut = _pclWrapper.concatenateFields( _cloud1, _cloud2 )
+#	_cloudOut = _pclWrapper.concatenateFields( _cloud1, _cloud2 )
 
-	return pyWrapper._from_cpp( _cloudOut, PointCloud2 )
-
+#	return pyWrapper._from_cpp( _cloudOut, PointCloud2 )
+#
 
 PointCloud2.points = _points
 PointCloud2.__add__ = _concatenatePointCloud
