@@ -26,6 +26,7 @@ catkin_python_setup()
 catkin_package(
 			INCLUDE_DIRS include
 			LIBRARIES
+			_pcl_common_wrapper_cpp
 			_pcd_io_wrapper_cpp
 			_pcl_visualizer_wrapper_cpp
 			_pcl_voxel_grid_wrapper_cpp
@@ -56,6 +57,7 @@ link_directories(
 add_definitions(${PCL_DEFINITIONS})
 
 ## Declare a cpp library
+add_library(_pcl_common_wrapper_cpp src/pcl_common_wrapper.cpp)
 add_library(_pcd_io_wrapper_cpp src/pcd_io_wrapper.cpp)
 add_library(_pcl_icp_wrapper_cpp src/pcl_icp_wrapper.cpp)
 add_library(_pcl_visualizer_wrapper_cpp src/pcl_visualizer_wrapper.cpp)
@@ -65,6 +67,7 @@ add_library(_pcl_outliers_wrapper_cpp src/filters/pcl_outliers_wrapper.cpp)
 
 
 ## Specify libraries to link a library or executable target against
+target_link_libraries(_pcl_common_wrapper_cpp ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${Boost_LIBRARIES} )
 target_link_libraries(_pcd_io_wrapper_cpp ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${Boost_LIBRARIES} )
 target_link_libraries(_pcl_icp_wrapper_cpp ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${Boost_LIBRARIES} )
 target_link_libraries(_pcl_visualizer_wrapper_cpp ${catkin_LIBRARIES} ${PCL_LIBRARIES} ${Boost_LIBRARIES} )
@@ -74,6 +77,7 @@ target_link_libraries(_pcl_outliers_wrapper_cpp ${catkin_LIBRARIES} ${PCL_LIBRAR
 
 # Don't prepend wrapper library name with lib and add to Python libs.
 set_target_properties(
+			_pcl_common_wrapper_cpp
 			_pcd_io_wrapper_cpp
 			_pcl_icp_wrapper_cpp
 			_pcl_visualizer_wrapper_cpp
