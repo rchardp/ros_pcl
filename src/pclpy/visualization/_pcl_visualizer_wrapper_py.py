@@ -47,7 +47,7 @@ class PCLVisualizer(object):
 		_wname = self._to_cpp( String(winName) )
 		self._viewer.setWindowName( _wname )
 
-	def addPointCloud( self, cloud ):
+	def addPointCloud(self, cloud):
 		'''Add Point Cloud to Screen
 		Parameters
 		----------
@@ -57,8 +57,21 @@ class PCLVisualizer(object):
 			rospy.ROSException( 'Argument1 is not PointCloud2' )
 		s_cloud = self._to_cpp( cloud )
 		s_ret = self._viewer.addPointCloud( s_cloud )
-		ret = self._from_cpp(s_ret, Bool)
+		ret = self._from_cpp(s_ret, String)
 		return ret.data
+
+	def removePointCloud(self, cloud_id):
+		'''Remove Point Cloud from Screen
+		Parameters
+		----------
+		- cloud_id : the point cloud object id (taken from addPointCloud)
+		'''
+		if not isinstance( cloud_id, str ):
+			rospy.ROSException( 'Argument1 is not str' )
+		_cloud_id = self._to_cpp( String(cloud_id) )
+		ret = self._viewer.removePointCloud(_cloud_id)
+		_ret = self._from_cpp( ret, Bool )
+		return _ret.data
 
 	def spin(self):
 		'''Spin Visualizer

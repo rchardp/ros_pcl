@@ -20,15 +20,30 @@ public:
 	std::string addPointCloud( std::string cloud )
 	{
 		std::stringstream ss;
-		std_msgs::Bool ret;
+		std_msgs::String ret;
+		bool addSuccess;
 		sensor_msgs::PointCloud2 cloud2 = from_python<sensor_msgs::PointCloud2>( cloud );
 		pcl::PointCloud<PointT>::Ptr _cloud( new pcl::PointCloud<PointT> );
 		pcl::moveFromROSMsg( cloud2, *_cloud );
 		PointCloudColorHandlerRGBField<PointT> rgb( _cloud );
-		ss << "$" << ++PCLVisualizerWrapper::clouds;
-		ret.data = PCLVisualizer::addPointCloud( _cloud, rgb, ss.str() );
+		ss << "$" << PCLVisualizerWrapper::clouds + 1;
+		addSuccess = PCLVisualizer::addPointCloud( _cloud, rgb, ss.str() );
+		if (addSuccess) {
+			++PCLVisualizerWrapper::clouds;
+			ret.data = ss.str();
+		}
+		//ret.data = ss.str();
 		return to_python( ret );
 	}
+
+	std::string removePointCloud( std::string id ) {
+		std_msgs::Bool _ret;
+		std_msgs::String _id;
+		_id = from_python<std_msgs::String>( id );
+		_ret.data = PCLVisualizer::removePointCloud( _id.data );
+		return to_python<std_msgs::Bool>( _ret );
+	}
+
 	void setBackgroundColor( std::string r, std::string g, std::string b )
 	{
 		std_msgs::UInt8 _r, _g, _b;
@@ -64,6 +79,7 @@ int PCLVisualizerWrapper::clouds = 0;
 BOOST_PYTHON_MODULE( _pcl_visualizer_wrapper_cpp ) {
 	boost::python::class_<PCLVisualizerWrapper> ( "PCLVisualizerWrapper", boost::python::init<>())
 	.def( "addPointCloud", &PCLVisualizerWrapper::addPointCloud )
+	.def( "removePointCloud", &PCLVisualizerWrapper::removePointCloud )
 	.def( "setBackgroundColor", &PCLVisualizerWrapper::setBackgroundColor )
 	.def( "setWindowName", &PCLVisualizerWrapper::setWindowName )
 	.def( "spin", &PCLVisualizerWrapper::spin )
