@@ -13,16 +13,17 @@ class PcdIO(object):
 
 	def savePCDFile(self, filename, cloud):
 		'''Save PCD file
+		Returns the operation success (True, False)
 		Parameters
 		----------
 		- filename: filename to save the pcd file
 		- cloud:    cloud to save
 		'''
 		if not isinstance( filename, str ):
-			rospy.ROSException( 'Argument1 is not str' )
+			rospy.ROSException( 'filename is not str' )
 
 		if not isinstance( cloud, PointCloud2 ):
-			rospy.ROSException( 'Argument2 is not PointCloud2' )
+			rospy.ROSException( 'cloud is not a PointCloud2' )
 
 		str_cloud = self._to_cpp( cloud )
 		str_filename = self._to_cpp( String(filename) )
@@ -32,17 +33,18 @@ class PcdIO(object):
 
 	def loadPCDFile(self, filename):
 		'''Load PCD file
+		Returns the resultant PointCloud2
 		Parameters
 		----------
-		- filename: filename to read the pcd file
+		- filename: the name of the file to load
 		'''
 		if not isinstance( filename, str ):
-			rospy.ROSException( 'Argument1 is not str' )
+			rospy.ROSException( 'filename is not str' )
 
 		str_filename = self._to_cpp( String(filename) )
 		str_cloud = self._pcd_io.loadPCDFile( str_filename )
 		return self._from_cpp( str_cloud, PointCloud2 )
 
-pcdio = PcdIO()
-savePCDFile = pcdio.loadPCDFile
-loadPCDFile = pcdio.loadPCDFile
+_pcdio = PcdIO()
+savePCDFile = _pcdio.loadPCDFile
+loadPCDFile = _pcdio.loadPCDFile

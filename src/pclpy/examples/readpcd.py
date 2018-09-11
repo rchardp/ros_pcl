@@ -1,5 +1,3 @@
-import pclpy.pcdio
+from pclpy.pcdio import loadPCDFile
 
 cloud = loadPCDFile('inputCloud.pcd')
-
-print( cloud )
