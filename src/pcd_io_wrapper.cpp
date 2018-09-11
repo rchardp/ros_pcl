@@ -1,13 +1,4 @@
-#include <boost/python.hpp>
-#include <pclpy/wrapper.h>
-
-#include <sensor_msgs/PointCloud2.h>
-#include <std_msgs/String.h>
-#include <std_msgs/Bool.h>
-#include <pcl_conversions/pcl_conversions.h>
-//#include <pcl/io/pcd_io.h>
-#include <pcl/point_types.h>
-#include <string>
+#include <pclpy/definitions.h>
 
 class PcdIOWrapper {
 
@@ -35,7 +26,7 @@ public:
 			from_python<std_msgs::String>( fileName );
 		int ret =
 			pcl::io::savePCDFile( t_filename.data, cloud2 );
-		
+
 		std_msgs::Bool b_ret;
 			b_ret.data = (ret != -1 );
 

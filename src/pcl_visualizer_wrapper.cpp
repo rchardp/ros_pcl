@@ -1,25 +1,14 @@
-#include <boost/python.hpp>
-#include <pclpy/wrapper.h>
-#include <pcl/point_types.h>
-
-#include <sensor_msgs/PointCloud2.h>
-#include <std_msgs/String.h>
-#include <std_msgs/UInt8.h>
-#include <std_msgs/Int32.h>
-#include <std_msgs/Bool.h>
-#include <pcl_conversions/pcl_conversions.h>
+#include <pclpy/definitions.h>
 
 #include <pcl/point_cloud.h>
 #include <pcl/features/normal_3d.h>
 #include <pcl/common/common_headers.h>
 #include <pcl/visualization/pcl_visualizer.h>
 
-#include <string>
 #include <sstream>
 
 using pcl::visualization::PCLVisualizer;
 using pcl::visualization::PointCloudColorHandlerRGBField;
-typedef pcl::PointXYZRGB PointT;
 
 class PCLVisualizerWrapper : public PCLVisualizer
 {
@@ -36,7 +25,7 @@ public:
 		pcl::PointCloud<PointT>::Ptr _cloud( new pcl::PointCloud<PointT> );
 		pcl::moveFromROSMsg( cloud2, *_cloud );
 		PointCloudColorHandlerRGBField<PointT> rgb( _cloud );
-		ss << ++PCLVisualizerWrapper::clouds;
+		ss << "$" << ++PCLVisualizerWrapper::clouds;
 		ret.data = PCLVisualizer::addPointCloud( _cloud, rgb, ss.str() );
 		return to_python( ret );
 	}

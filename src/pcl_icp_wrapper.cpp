@@ -1,17 +1,7 @@
-#include <boost/python.hpp>
-#include <pclpy/wrapper.h>
-#include <pcl/point_types.h>
 
-#include <sensor_msgs/PointCloud2.h>
-#include <std_msgs/Float32.h>
-#include <std_msgs/Int32.h>
-#include <pcl_conversions/pcl_conversions.h>
+#include <pclpy/definitions.h>
 #include <pcl/registration/icp.h>
-
-#include <string>
 #include <sstream>
-
-typedef pcl::PointXYZRGB PointT;
 
 class IterativeClosestPointWrapper : public pcl::IterativeClosestPoint<PointT, PointT>
 {

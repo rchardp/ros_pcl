@@ -9,6 +9,7 @@
 #include <std_msgs/Bool.h>
 #include <std_msgs/Float32.h>
 #include <std_msgs/Int32.h>
+#include <std_msgs/UInt8.h>
 
 #include <pcl_conversions/pcl_conversions.h>
 #include <pcl/point_types.h>
