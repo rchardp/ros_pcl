@@ -20,14 +20,14 @@ class PCLVisualizer(object):
 		- g : green channel
 		- b : blue channel
 		'''
-		if not isinstance( r, int ):
-			rospy.ROSException( 'Argument1 is not int' )
+		if not (isinstance( r, int ) and 0 <= r <= 255):
+			rospy.ROSException( 'r is not a 8 bytes uint' )
 
-		if not isinstance( g, int ):
-			rospy.ROSException( 'Argument2 is not int' )
+		if not (isinstance( g, int ) and 0 <= g <= 255):
+			rospy.ROSException( 'g is not a 8 bytes uint' )
 
-		if not isinstance( b, int ):
-			rospy.ROSException( 'Argument3 is not int' )
+		if not (isinstance( b, int ) and 0 <= b <= 255):
+			rospy.ROSException( 'b is not a 8 bytes uint' )
 
 		_r = self._to_cpp( UInt8(r) )
 		_g = self._to_cpp( UInt8(g) )
@@ -42,19 +42,20 @@ class PCLVisualizer(object):
 		- winName: window name
 		'''
 		if not isinstance( winName, str ):
-			rospy.ROSException( 'Argument1 is not str' )
+			rospy.ROSException( 'winName is not str' )
 
 		_wname = self._to_cpp( String(winName) )
 		self._viewer.setWindowName( _wname )
 
 	def addPointCloud(self, cloud):
 		'''Add Point Cloud to Screen
+		Returns a cloud_id
 		Parameters
 		----------
 		- cloud : PointCloud2 to display
 		'''
 		if not isinstance( cloud, PointCloud2 ):
-			rospy.ROSException( 'Argument1 is not PointCloud2' )
+			rospy.ROSException( 'cloud is not a PointCloud2' )
 		s_cloud = self._to_cpp( cloud )
 		s_ret = self._viewer.addPointCloud( s_cloud )
 		ret = self._from_cpp(s_ret, String)
@@ -62,12 +63,13 @@ class PCLVisualizer(object):
 
 	def removePointCloud(self, cloud_id):
 		'''Remove Point Cloud from Screen
+		Returns the operation success
 		Parameters
 		----------
 		- cloud_id : the point cloud object id (taken from addPointCloud)
 		'''
 		if not isinstance( cloud_id, str ):
-			rospy.ROSException( 'Argument1 is not str' )
+			rospy.ROSException( 'cloud_id is not str' )
 		_cloud_id = self._to_cpp( String(cloud_id) )
 		ret = self._viewer.removePointCloud(_cloud_id)
 		_ret = self._from_cpp( ret, Bool )
@@ -87,10 +89,10 @@ class PCLVisualizer(object):
 		- time : How long (in ms) should the visualization run
 		- force_redraw : force the visualizer to redraw the screen
 		'''
-		if not isinstance( time, int ):
-			rospy.ROSException( 'Argument1 is not int' )
+		if not (isinstance( time, int ) and time >= 0 ):
+			rospy.ROSException( 'time is not uint' )
 		if not isinstance( force_redraw, bool ):
-			rospy.ROSException( 'Argument2 is not bool' )
+			rospy.ROSException( 'force_redraw is not bool' )
 
 		s_time = self._to_cpp( Int32(time) )
 		s_force_redraw = self._to_cpp( Bool(force_redraw) )
