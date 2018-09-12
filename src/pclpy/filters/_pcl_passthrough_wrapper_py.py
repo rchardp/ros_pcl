@@ -12,13 +12,13 @@ class PassThrough(object):
 		self._from_cpp = pyWrapper._from_cpp
 
 	def setInputCloud(self, cloud):
-		'''Set the voxel grid input cloud
+		'''Set the input cloud
 		Parameters
 		----------
 		- cloud : cloud to filter
 		'''
 		if not isinstance( cloud, PointCloud2 ):
-			rospy.ROSException( 'Argument1 is not PointCloud2' )
+			rospy.ROSException( 'cloud is not a PointCloud2' )
 
 		_cloud = self._to_cpp( cloud )
 
@@ -31,7 +31,7 @@ class PassThrough(object):
 		- field_name : The name of the field
 		'''
 		if not isinstance( field_name, str ):
-			rospy.ROSException( 'Argument1 is not str' )
+			rospy.ROSException( 'field_name is not str' )
 		_field = self._to_cpp( String(field_name) )
 		self._passthrough.setFilterFieldName( _field )
 
@@ -43,9 +43,9 @@ class PassThrough(object):
 		- limit_max : The maximum allowed field value
 		'''
 		if not isinstance( limit_min, float ):
-			rospy.ROSException( 'Argument1 is not float' )
+			rospy.ROSException( 'limit_min is not float' )
 		if not isinstance( limit_max, float ):
-			rospy.ROSException( 'Argument2 is not float' )
+			rospy.ROSException( 'limit_max is not float' )
 		_min = self._to_cpp( Float32(limit_min) )
 		_max = self._to_cpp( Float32(limit_max) )
 		self._passthrough.setFilterLimits( _min, _max )
@@ -57,12 +57,13 @@ class PassThrough(object):
 		- negative : false = normal filter behavior (default), true = inverted behavior
 		'''
 		if not isinstance( negative, bool ):
-			rospy.ROSException( 'Argument1 is not bool' )
+			rospy.ROSException( 'negative is not bool' )
 		_neg = self._to_cpp( Bool(negative) )
 		self._passthrough.setNegative( _neg )
 
 	def filter(self):
-		'''Calls the filtering method and returns the filtered dataset
+		'''Calls the filtering method
+		Returns the filtered dataset
 		'''
 		_cloud = self._from_cpp(self._passthrough.filter(), PointCloud2)
 		return _cloud
