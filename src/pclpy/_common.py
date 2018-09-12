@@ -14,7 +14,8 @@ def _points(self):
 	'''
 	field_names = [ f.name for f in self.fields ]
 	Point = namedtuple("Point", field_names)
-	return [Point._make(l) for l in pc2.read_points(self)]
+	for l in pc2.read_points(self):
+		yield(Point._make(l))
 
 def _concatenatePointCloud( cloud1, cloud2 ):
 	'''Concatenate two PointCloud2 and return the resultant point cloud
