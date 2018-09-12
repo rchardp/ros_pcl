@@ -1,4 +1,5 @@
 from pclpy.visualization import PCLVisualizer
+from pclpy.pcdio import loadPCDFile
 
 vis = PCLVisualizer()
 
