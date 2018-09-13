@@ -1,3 +1,4 @@
+from __future__ import print_function
 import pclpy
 
 cloud1 = loadPCDFile('inputCloud1.pcd')
