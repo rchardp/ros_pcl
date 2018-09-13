@@ -18,7 +18,7 @@ class StatisticalOutlierRemoval(object):
 		- cloud : cloud to filter
 		'''
 		if not isinstance( cloud, PointCloud2 ):
-			rospy.ROSException( 'Argument1 is not PointCloud2' )
+			rospy.ROSException( 'cloud is not PointCloud2' )
 
 		_cloud = self._to_cpp( cloud )
 
@@ -31,7 +31,7 @@ class StatisticalOutlierRemoval(object):
 		- nr_k : The number of points to use for mean distance estimation
 		'''
 		if not isinstance( nr_k, int ):
-			rospy.ROSException( 'Argument1 is not int' )
+			rospy.ROSException( 'nr_k is not int' )
 		_nr_k = self._to_cpp( Int32(nr_k) )
 		self._outliers.setMeanK( _nr_k )
 
@@ -42,7 +42,7 @@ class StatisticalOutlierRemoval(object):
 		- stddev_mult : The standard deviation multiplier
 		'''
 		if not isinstance( stddev_mult, float ):
-			rospy.ROSException( 'Argument1 is not float' )
+			rospy.ROSException( 'stddev_mult is not float' )
 
 		_stddev_mult = self._to_cpp( Float32(stddev_mult) )
 		self._outliers.setStddevMulThresh( _stddev_mult )
@@ -54,7 +54,7 @@ class StatisticalOutlierRemoval(object):
 		- negative : false = normal filter behavior (default), true = inverted behavior
 		'''
 		if not isinstance( negative, bool ):
-			rospy.ROSException( 'Argument1 is not bool' )
+			rospy.ROSException( 'negative is not bool' )
 		_neg = self._to_cpp( Bool(negative) )
 		self._outliers.setNegative( _neg )
 
