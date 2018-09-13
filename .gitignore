@@ -1,3 +1,5 @@
 # ignorar todos los archivos pyc
 *.pyc
-*yc
+
+# ignorar archivos pdf
+*.pdf
