@@ -71,6 +71,28 @@ class IterativeClosestPoint(object):
 		_iters = self._from_cpp( self._icp.getMaximumIterations(), Int32 )
 		return _iters.data
 
+	def setTransformationEpsilon(self, epsilon):
+		'''Set the transformation epsilon (maximum allowable translation squared difference between two consecutive transformations)
+		Parameters
+		----------
+		- epsilon : the transformation epsilon in order for an optimization to be considered as having converged to the final solution
+		'''
+		if not isinstance(epsilon, float):
+			rospy.ROSException( 'epsilon is not float' )
+		s_epsilon = self._to_cpp( Float32(epsilon) )
+		self._icp.setTransformationEpsilon(s_epsilon)
+
+	def setEuclideanFitnessEpsilon(self, epsilon):
+		'''Set the maximum allowed Euclidean error between two consecutive steps in the ICP loop
+		Parameters
+		----------
+		- epsilon : the maximum allowed distance error before the algorithm will be considered to have converged
+		'''
+		if not isinstance(epsilon, float):
+			rospy.ROSException( 'epsilon is not float' )
+		s_epsilon = self._to_cpp( Float32(epsilon) )
+		self._icp.setEuclideanFitnessEpsilon(s_epsilon)
+
 	def align(self):
 		'''Perform the alignment
 		'''

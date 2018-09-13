@@ -51,6 +51,16 @@ public:
 		return to_python( _iters );
 	}
 
+	void setTransformationEpsilon(std::string epsilon) {
+		std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
+		IterativeClosestPoint::setTransformationEpsilon( _epsilon.data );
+	}
+
+	void setEuclideanFitnessEpsilon(std::string epsilon) {
+		std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
+		IterativeClosestPoint::setEuclideanFitnessEpsilon( _epsilon.data );
+	}
+
 	std::string align()
 	{
 		pcl::PointCloud<PointT> _cloud;
@@ -70,6 +80,8 @@ BOOST_PYTHON_MODULE( _pcl_icp_wrapper_cpp ) {
 	.def( "getMaxCorrespondenceDistance", &IterativeClosestPointWrapper::getMaxCorrespondenceDistance )
 	.def( "setMaximumIterations", &IterativeClosestPointWrapper::setMaximumIterations )
 	.def( "getMaximumIterations", &IterativeClosestPointWrapper::getMaximumIterations )
+	.def( "setTransformationEpsilon", &IterativeClosestPointWrapper::setTransformationEpsilon )
+	.def( "setEuclideanFitnessEpsilon", &IterativeClosestPointWrapper::setEuclideanFitnessEpsilon )
 	.def( "align", &IterativeClosestPointWrapper::align )
 	;
 }
