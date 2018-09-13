@@ -1,9 +1,7 @@
-from __future__ import print_function
 from pclpy.pcdio import loadPCDFile
 from pclpy.visualization import PCLVisualizer
-from pclpy.registration import IterativeClosestPoint
 from pclpy.filters import PassThrough
-
+from pclpy.registration import IterativeClosestPoint
 
 pcd_files = [ 'inputCloud0', 'inputCloud1' ]
 

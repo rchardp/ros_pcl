@@ -18,7 +18,7 @@ class IterativeClosestPoint(object):
 		- cloud : the input cloud source
 		'''
 		if not isinstance( cloud, PointCloud2 ):
-			rospy.ROSException( 'Argument1 is not PointCloud2' )
+			rospy.ROSException( 'cloud is not PointCloud2' )
 
 		s_cloud = self._to_cpp(cloud)
 		self._icp.setInputSource( s_cloud )
@@ -30,7 +30,7 @@ class IterativeClosestPoint(object):
 		- cloud : the input point cloud target
 		'''
 		if not isinstance( cloud, PointCloud2 ):
-			rospy.ROSException( 'Argument1 is not PointCloud2' )
+			rospy.ROSException( 'cloud is not PointCloud2' )
 
 		s_cloud = self._to_cpp(cloud)
 		self._icp.setInputTarget( s_cloud )
@@ -44,7 +44,7 @@ class IterativeClosestPoint(object):
 							   process
 		'''
 		if not isinstance(distance_threshold, float):
-			rospy.ROSException( 'Argument1 is not float' )
+			rospy.ROSException( 'distance_threshold is not float' )
 		s_dist = self._to_cpp( Float32(distance_threshold) )
 		self._icp.setMaxCorrespondenceDistance( s_dist )
 
@@ -61,7 +61,7 @@ class IterativeClosestPoint(object):
 		- nr_iterations : the maximum number of iterations the internal optimization should run for
 		'''
 		if not isinstance(nr_iterations, int):
-			rospy.ROSException( 'Argument1 is not int' )
+			rospy.ROSException( 'nr_iterations is not int' )
 		s_iters = self._to_cpp( Int32(nr_iterations) )
 		self._icp.setMaximumIterations(s_iters)
 
