@@ -30,9 +30,9 @@ def _concatenatePointCloud( cloud1, cloud2 ):
 	- cloud2 : the second input point cloud dataset
 	'''
 	if not isinstance( cloud1, PointCloud2 ):
-		rospy.ROSException( 'Argument1 is not PointCloud2' )
+		rospy.ROSException( 'cloud1 is not PointCloud2' )
 	if not isinstance( cloud2, PointCloud2 ):
-		rospy.ROSException( 'Argument2 is not PointCloud2' )
+		rospy.ROSException( 'cloud2 is not PointCloud2' )
 
 	_cloud1 = pyWrapper._to_cpp( cloud1 )
 	_cloud2 = pyWrapper._to_cpp( cloud2 )
