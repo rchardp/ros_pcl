@@ -9,11 +9,16 @@ from ._wrapper import pyWrapper
 _pclWrapper = PointCloudWrapper()
 
 @property
+def _field_names(self):
+	'''Get the field names
+	'''
+	return [ f.name for f in self.fields ]
+
+@property
 def _points(self):
 	'''Get the data array where all points are stored
 	'''
-	field_names = [ f.name for f in self.fields ]
-	Point = namedtuple("Point", field_names)
+	Point = namedtuple("Point", self.field_names)
 	for l in pc2.read_points(self):
 		yield(Point._make(l))
 
@@ -38,3 +43,4 @@ def _concatenatePointCloud( cloud1, cloud2 ):
 
 PointCloud2.points = _points
 PointCloud2.__add__ = _concatenatePointCloud
+PointCloud2.field_names = _field_names
