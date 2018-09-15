@@ -1,6 +1,6 @@
 import rospy
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import String, UInt8, Int32, Bool
+from std_msgs.msg import String, UInt8, Int32, Bool, Float32
 from .._wrapper import pyWrapper
 
 from pclpy._pcl_visualizer_wrapper_cpp import PCLVisualizerWrapper
@@ -12,7 +12,7 @@ class PCLVisualizer(object):
 		self._from_cpp = pyWrapper._from_cpp
 		if wname: self.setWindowName(wname)
 
-	def setBackgroundColor(self, r, g, b):
+	def setBackgroundColor(self, r, g, b, viewport=0):
 		'''Set background color
 		Parameters
 		----------
@@ -29,11 +29,15 @@ class PCLVisualizer(object):
 		if not (isinstance( b, int ) and 0 <= b <= 255):
 			rospy.ROSException( 'b is not a 8 bytes uint' )
 
+		if not isinstance(viewport, int):
+			rospy.ROSException( 'viewport is not int' )
+
 		_r = self._to_cpp( UInt8(r) )
 		_g = self._to_cpp( UInt8(g) )
 		_b = self._to_cpp( UInt8(b) )
+		_viewport = self._to_cpp( Int32(viewport) )
 
-		self._viewer.setBackgroundColor( _r, _g, _b )
+		self._viewer.setBackgroundColor( _r, _g, _b, _viewport )
 
 	def setWindowName(self, winName):
 		'''Set Window Name
@@ -47,7 +51,29 @@ class PCLVisualizer(object):
 		_wname = self._to_cpp( String(winName) )
 		self._viewer.setWindowName( _wname )
 
-	def addPointCloud(self, cloud):
+	def createViewPort(self, xmin, ymin, xmax, ymax, viewport):
+		'''
+		'''
+		if not isinstance( xmin, float ):
+			rospy.ROSException( 'xmin is not float' )
+		if not isinstance( ymin, float ):
+			rospy.ROSException( 'ymin is not float' )
+		if not isinstance( xmax, float ):
+			rospy.ROSException( 'xmax is not float' )
+		if not isinstance( ymax, float ):
+			rospy.ROSException( 'ymax is not float' )
+		if not isinstance( viewport, int ):
+			rospy.ROSException( 'viewport is not int' )
+
+		_xmin = self._to_cpp( Float32(xmin) )
+		_ymin = self._to_cpp( Float32(ymin) )
+		_xmax = self._to_cpp( Float32(xmax) )
+		_ymax = self._to_cpp( Float32(ymax) )
+		_viewport = self._to_cpp(Int32(viewport) )
+
+		self._viewer.createViewPort( _xmin, _ymin, _xmax, _ymax, _viewport )
+
+	def addPointCloud(self, cloud, viewport=0):
 		'''Add Point Cloud to Screen
 		Returns a cloud_id
 		Parameters
@@ -56,12 +82,17 @@ class PCLVisualizer(object):
 		'''
 		if not isinstance( cloud, PointCloud2 ):
 			rospy.ROSException( 'cloud is not a PointCloud2' )
-		s_cloud = self._to_cpp( cloud )
-		s_ret = self._viewer.addPointCloud( s_cloud )
-		ret = self._from_cpp(s_ret, String)
+
+		if not isinstance(viewport, int):
+			rospy.ROSException( 'viewport is not int' )
+
+		_cloud = self._to_cpp( cloud )
+		_viewport = self._to_cpp( Int32(viewport) )
+		_ret = self._viewer.addPointCloud( _cloud, _viewport )
+		ret = self._from_cpp(_ret, String)
 		return ret.data
 
-	def removePointCloud(self, cloud_id):
+	def removePointCloud(self, cloud_id, viewport=0):
 		'''Remove Point Cloud from Screen
 		Returns the operation success
 		Parameters
@@ -70,8 +101,13 @@ class PCLVisualizer(object):
 		'''
 		if not isinstance( cloud_id, str ):
 			rospy.ROSException( 'cloud_id is not str' )
+
+		if not isinstance(viewport, int):
+			rospy.ROSException( 'viewport is not int' )
+
 		_cloud_id = self._to_cpp( String(cloud_id) )
-		ret = self._viewer.removePointCloud(_cloud_id)
+		_viewport = self._to_cpp( Int32(viewport) )
+		ret = self._viewer.removePointCloud(_cloud_id, _viewport)
 		_ret = self._from_cpp( ret, Bool )
 		return _ret.data
 
@@ -94,9 +130,9 @@ class PCLVisualizer(object):
 		if not isinstance( force_redraw, bool ):
 			rospy.ROSException( 'force_redraw is not bool' )
 
-		s_time = self._to_cpp( Int32(time) )
-		s_force_redraw = self._to_cpp( Bool(force_redraw) )
-		self._viewer.spinOnce(s_time, s_force_redraw)
+		_time = self._to_cpp( Int32(time) )
+		_force_redraw = self._to_cpp( Bool(force_redraw) )
+		self._viewer.spinOnce(_time, _force_redraw)
 
 	def close(self):
 		'''Stop Visualizer
