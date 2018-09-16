@@ -15,7 +15,7 @@ public:
 		PCLVisualizer::initCameraParameters();
 	}
 
-	void createViewPort( std::string xmin, std::string ymin,
+	std::string createViewPort( std::string xmin, std::string ymin,
 											 std::string xmax, std::string ymax,
 											 std::string viewport ) {
 		std_msgs::Float32 _xmin, _ymin, _xmax, _ymax;
@@ -30,7 +30,7 @@ public:
 		PCLVisualizer::createViewPort( _xmin.data, _ymin.data,
 																	 _xmax.data, _ymax.data,
 																	 _viewport.data );
-
+		return to_python( _viewport );
 	}
 
 	std::string addPointCloud( std::string cloud, std::string viewport )

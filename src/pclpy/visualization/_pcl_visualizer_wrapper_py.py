@@ -13,12 +13,13 @@ class PCLVisualizer(object):
 		if wname: self.setWindowName(wname)
 
 	def setBackgroundColor(self, r, g, b, viewport=0):
-		'''Set background color
+		'''Set the viewport's background color
 		Parameters
 		----------
-		- r : red channel
-		- g : green channel
-		- b : blue channel
+		- r : the red component of the RGB color
+		- g : the green component of the RGB color
+		- b : the blue component of the RGB color
+		- viewport : the viewport (default: all)
 		'''
 		if not (isinstance( r, int ) and 0 <= r <= 255):
 			rospy.ROSException( 'r is not a 8 bytes uint' )
@@ -40,10 +41,10 @@ class PCLVisualizer(object):
 		self._viewer.setBackgroundColor( _r, _g, _b, _viewport )
 
 	def setWindowName(self, winName):
-		'''Set Window Name
+		'''Set the visualizer window name
 		Parameters
 		----------
-		- winName: window name
+		- winName: the name of the window
 		'''
 		if not isinstance( winName, str ):
 			rospy.ROSException( 'winName is not str' )
@@ -51,17 +52,25 @@ class PCLVisualizer(object):
 		_wname = self._to_cpp( String(winName) )
 		self._viewer.setWindowName( _wname )
 
-	def createViewPort(self, xmin, ymin, xmax, ymax, viewport):
+	def createViewPort(self, xmin, ymin, xmax, ymax, viewport=0):
+		'''Create a new viewport from [xmin,ymin] -> [xmax,ymax]
+		Returns the viewport id created
+		Parameters
+		----------
+		- xmin : the minimum X coordinate for the viewport (0.0 <= 1.0)
+		- ymin : the minimum Y coordinate for the viewport (0.0 <= 1.0)
+		- xmax : the maximum X coordinate for the viewport (0.0 <= 1.0)
+		- ymax : the maximum Y coordinate for the viewport (0.0 <= 1.0)
+		- viewport : the id of the new viewport (default: auto)
 		'''
-		'''
-		if not isinstance( xmin, float ):
-			rospy.ROSException( 'xmin is not float' )
-		if not isinstance( ymin, float ):
-			rospy.ROSException( 'ymin is not float' )
-		if not isinstance( xmax, float ):
-			rospy.ROSException( 'xmax is not float' )
-		if not isinstance( ymax, float ):
-			rospy.ROSException( 'ymax is not float' )
+		if not (isinstance( xmin, float ) and 0 <= xmin <= 1):
+			rospy.ROSException( 'xmin is not float or not in range 0..1' )
+		if not (isinstance( ymin, float ) and 0 <= ymin <= 1):
+			rospy.ROSException( 'ymin is not float or not in range 0..1' )
+		if not (isinstance( xmax, float ) and 0 <= xmax <= 1):
+			rospy.ROSException( 'xmax is not float or not in range 0..1' )
+		if not (isinstance( ymax, float ) and 0 <= ymax <= 1):
+			rospy.ROSException( 'ymax is not float or not in range 0..1' )
 		if not isinstance( viewport, int ):
 			rospy.ROSException( 'viewport is not int' )
 
@@ -69,16 +78,18 @@ class PCLVisualizer(object):
 		_ymin = self._to_cpp( Float32(ymin) )
 		_xmax = self._to_cpp( Float32(xmax) )
 		_ymax = self._to_cpp( Float32(ymax) )
-		_viewport = self._to_cpp(Int32(viewport) )
+		_viewport = self._to_cpp( Int32(viewport) )
 
-		self._viewer.createViewPort( _xmin, _ymin, _xmax, _ymax, _viewport )
+		_viewport = self._viewer.createViewPort( _xmin, _ymin, _xmax, _ymax, _viewport )
+		return self._from_cpp(_viewport, Int32).data
 
 	def addPointCloud(self, cloud, viewport=0):
 		'''Add Point Cloud to Screen
 		Returns a cloud_id
 		Parameters
 		----------
-		- cloud : PointCloud2 to display
+		- cloud : the input cloud data set
+		- viewport : the view port where the Point Cloud should be added (default: all)
 		'''
 		if not isinstance( cloud, PointCloud2 ):
 			rospy.ROSException( 'cloud is not a PointCloud2' )
@@ -98,6 +109,7 @@ class PCLVisualizer(object):
 		Parameters
 		----------
 		- cloud_id : the point cloud object id (taken from addPointCloud)
+		- viewport : view port from where the Point Cloud should be removed (default: all)
 		'''
 		if not isinstance( cloud_id, str ):
 			rospy.ROSException( 'cloud_id is not str' )
