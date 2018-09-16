@@ -2,12 +2,12 @@
 <package format="2">
   <name>pclpy</name>
   <version>0.0.0</version>
-  <description>The pclpy package</description>
+  <description>pclpy package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag -->
   <!-- Example:  -->
   <!-- <maintainer email="jane.doe@example.com">Jane Doe</maintainer> -->
-  <maintainer email="rchardp@todo.todo">rchardp</maintainer>
+  <maintainer email="pclpy@maintainer.todo">pclpy maintainer</maintainer>
 
 
   <!-- One license tag required, multiple allowed, one license per tag -->
