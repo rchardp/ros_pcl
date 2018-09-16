@@ -52,7 +52,7 @@ class PCLVisualizer(object):
 		_wname = self._to_cpp( String(winName) )
 		self._viewer.setWindowName( _wname )
 
-	def createViewPort(self, xmin, ymin, xmax, ymax, viewport=0):
+	def createViewPort(self, xmin, ymin, xmax, ymax):
 		'''Create a new viewport from [xmin,ymin] -> [xmax,ymax]
 		Returns the viewport id created
 		Parameters
@@ -61,7 +61,6 @@ class PCLVisualizer(object):
 		- ymin : the minimum Y coordinate for the viewport (0.0 <= 1.0)
 		- xmax : the maximum X coordinate for the viewport (0.0 <= 1.0)
 		- ymax : the maximum Y coordinate for the viewport (0.0 <= 1.0)
-		- viewport : the id of the new viewport (default: auto)
 		'''
 		if not (isinstance( xmin, float ) and 0 <= xmin <= 1):
 			rospy.ROSException( 'xmin is not float or not in range 0..1' )
@@ -71,16 +70,13 @@ class PCLVisualizer(object):
 			rospy.ROSException( 'xmax is not float or not in range 0..1' )
 		if not (isinstance( ymax, float ) and 0 <= ymax <= 1):
 			rospy.ROSException( 'ymax is not float or not in range 0..1' )
-		if not isinstance( viewport, int ):
-			rospy.ROSException( 'viewport is not int' )
 
 		_xmin = self._to_cpp( Float32(xmin) )
 		_ymin = self._to_cpp( Float32(ymin) )
 		_xmax = self._to_cpp( Float32(xmax) )
 		_ymax = self._to_cpp( Float32(ymax) )
-		_viewport = self._to_cpp( Int32(viewport) )
 
-		_viewport = self._viewer.createViewPort( _xmin, _ymin, _xmax, _ymax, _viewport )
+		_viewport = self._viewer.createViewPort( _xmin, _ymin, _xmax, _ymax )
 		return self._from_cpp(_viewport, Int32).data
 
 	def addPointCloud(self, cloud, viewport=0):

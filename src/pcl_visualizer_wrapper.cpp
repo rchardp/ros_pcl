@@ -16,8 +16,7 @@ public:
 	}
 
 	std::string createViewPort( std::string xmin, std::string ymin,
-											 std::string xmax, std::string ymax,
-											 std::string viewport ) {
+															std::string xmax, std::string ymax ) {
 		std_msgs::Float32 _xmin, _ymin, _xmax, _ymax;
 		std_msgs::Int32 _viewport;
 
@@ -25,7 +24,7 @@ public:
 		_ymin = from_python<std_msgs::Float32>( ymin );
 		_xmax = from_python<std_msgs::Float32>( xmax );
 		_ymax = from_python<std_msgs::Float32>( ymax );
-		_viewport = from_python<std_msgs::Int32> ( viewport );
+		_viewport.data = 0;
 
 		PCLVisualizer::createViewPort( _xmin.data, _ymin.data,
 																	 _xmax.data, _ymax.data,
