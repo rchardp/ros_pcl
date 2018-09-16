@@ -1,76 +1,69 @@
-
-#include <pclpy/definitions.h>
-#include <pcl/registration/icp.h>
+#include <pclpy/registration/icp.h>
 #include <sstream>
 
-class IterativeClosestPointWrapper : public pcl::IterativeClosestPoint<PointT, PointT>
+IterativeClosestPointWrapper::IterativeClosestPointWrapper() :
+	IterativeClosestPoint() {}
+
+void IterativeClosestPointWrapper::setInputSource(std::string cloud)
 {
+	sensor_msgs::PointCloud2 cloud2 = from_python<sensor_msgs::PointCloud2>( cloud );
+	pcl::PointCloud<PointT>::Ptr _cloud( new pcl::PointCloud<PointT> );
+	pcl::moveFromROSMsg( cloud2, *_cloud );
+	IterativeClosestPoint::setInputSource( _cloud );
+}
 
-public:
-	IterativeClosestPointWrapper() : IterativeClosestPoint() {}
+void IterativeClosestPointWrapper::setInputTarget(std::string cloud)
+{
+	sensor_msgs::PointCloud2 cloud2 = from_python<sensor_msgs::PointCloud2>( cloud );
+	pcl::PointCloud<PointT>::Ptr _cloud( new pcl::PointCloud<PointT> );
+	pcl::moveFromROSMsg( cloud2, *_cloud );
+	IterativeClosestPoint::setInputTarget( _cloud );
+}
 
-	void setInputSource(std::string cloud)
-	{
-		sensor_msgs::PointCloud2 cloud2 = from_python<sensor_msgs::PointCloud2>( cloud );
-		pcl::PointCloud<PointT>::Ptr _cloud( new pcl::PointCloud<PointT> );
-		pcl::moveFromROSMsg( cloud2, *_cloud );
-		IterativeClosestPoint::setInputSource( _cloud );
-	}
+void IterativeClosestPointWrapper::setMaxCorrespondenceDistance(std::string distance_threshold)
+{
+	std_msgs::Float32 _dist = from_python<std_msgs::Float32>( distance_threshold );
+	IterativeClosestPoint::setMaxCorrespondenceDistance( _dist.data );
+}
 
-	void setInputTarget(std::string cloud)
-	{
-		sensor_msgs::PointCloud2 cloud2 = from_python<sensor_msgs::PointCloud2>( cloud );
-		pcl::PointCloud<PointT>::Ptr _cloud( new pcl::PointCloud<PointT> );
-		pcl::moveFromROSMsg( cloud2, *_cloud );
-		IterativeClosestPoint::setInputTarget( _cloud );
-	}
+std::string IterativeClosestPointWrapper::getMaxCorrespondenceDistance()
+{
+	std_msgs::Float32 _dist;
+	_dist.data = IterativeClosestPoint::getMaxCorrespondenceDistance();
+	return to_python(_dist);
+}
 
-	void setMaxCorrespondenceDistance(std::string distance_threshold)
-	{
-		std_msgs::Float32 _dist = from_python<std_msgs::Float32>( distance_threshold );
-		IterativeClosestPoint::setMaxCorrespondenceDistance( _dist.data );
-	}
+void IterativeClosestPointWrapper::setMaximumIterations(std::string nr_iterations)
+{
+	std_msgs::Int32 _iters = from_python<std_msgs::Int32>( nr_iterations );
+	IterativeClosestPoint::setMaximumIterations( _iters.data );
+}
 
-	std::string getMaxCorrespondenceDistance()
-	{
-		std_msgs::Float32 _dist;
-		_dist.data = IterativeClosestPoint::getMaxCorrespondenceDistance();
-		return to_python(_dist);
-	}
+std::string IterativeClosestPointWrapper::getMaximumIterations()
+{
+	std_msgs::Int32 _iters;
+	_iters.data = IterativeClosestPoint::getMaximumIterations();
+	return to_python( _iters );
+}
 
-	void setMaximumIterations(std::string nr_iterations)
-	{
-		std_msgs::Int32 _iters = from_python<std_msgs::Int32>( nr_iterations );
-		IterativeClosestPoint::setMaximumIterations( _iters.data );
-	}
+void IterativeClosestPointWrapper::setTransformationEpsilon(std::string epsilon) {
+	std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
+	IterativeClosestPoint::setTransformationEpsilon( _epsilon.data );
+}
 
-	std::string getMaximumIterations()
-	{
-		std_msgs::Int32 _iters;
-		_iters.data = IterativeClosestPoint::getMaximumIterations();
-		return to_python( _iters );
-	}
+void IterativeClosestPointWrapper::setEuclideanFitnessEpsilon(std::string epsilon) {
+	std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
+	IterativeClosestPoint::setEuclideanFitnessEpsilon( _epsilon.data );
+}
 
-	void setTransformationEpsilon(std::string epsilon) {
-		std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
-		IterativeClosestPoint::setTransformationEpsilon( _epsilon.data );
-	}
-
-	void setEuclideanFitnessEpsilon(std::string epsilon) {
-		std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
-		IterativeClosestPoint::setEuclideanFitnessEpsilon( _epsilon.data );
-	}
-
-	std::string align()
-	{
-		pcl::PointCloud<PointT> _cloud;
-		sensor_msgs::PointCloud2 cloud2;
-		IterativeClosestPoint::align( _cloud );
-		pcl::toROSMsg( _cloud, cloud2 );
-		return to_python( cloud2 );
-	}
-
-};
+std::string IterativeClosestPointWrapper::align()
+{
+	pcl::PointCloud<PointT> _cloud;
+	sensor_msgs::PointCloud2 cloud2;
+	IterativeClosestPoint::align( _cloud );
+	pcl::toROSMsg( _cloud, cloud2 );
+	return to_python( cloud2 );
+}
 
 BOOST_PYTHON_MODULE( _pcl_icp_wrapper_cpp ) {
 	boost::python::class_<IterativeClosestPointWrapper> ( "IterativeClosestPointWrapper", boost::python::init<>())
