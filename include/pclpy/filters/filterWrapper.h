@@ -1,5 +1,5 @@
-#ifndef FILTER_WRAPPER_H
-#define FILTER_WRAPPER_H
+#ifndef _PCLPY_FILTER_WRAPPER_H
+#define _PCLPY_FILTER_WRAPPER_H
 
 #include <pclpy/definitions.h>
 
@@ -35,4 +35,4 @@ std::string FilterWrapper<T>::applyFilter()
 	return to_python( cloud2 );
 }
 
-#endif // FILTER_WRAPPER_H
+#endif // _PCLPY_FILTER_WRAPPER_H
