@@ -1,5 +1,5 @@
-#ifndef DEFINITIONS_H
-#define DEFINITIONS_H
+#ifndef _PCLPY_DEFINITIONS_H
+#define _PCLPY_DEFINITIONS_H
 
 #include <boost/python.hpp>
 #include <pclpy/wrapper.h>
@@ -17,4 +17,4 @@
 
 typedef pcl::PointXYZRGB PointT;
 
-#endif // DEFINITIONS_H
+#endif // _PCLPY_DEFINITIONS_H

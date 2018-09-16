@@ -1,5 +1,5 @@
-#ifndef PCL_PY_WRAPPER_H
-#define PCL_PY_WRAPPER_H 
+#ifndef _PCLPY_WRAPPER_H
+#define _PCLPY_WRAPPER_H
 
 #include <boost/python.hpp>
 #include <string>
@@ -31,4 +31,4 @@ std::string to_python(const M& msg) {
 	return str_msg;
 }
 
-#endif // PCL_PY_WRAPPER_H
+#endif // _PCLPY_WRAPPER_H
