@@ -1,6 +1,6 @@
 import rospy
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import String, UInt8, Int32, Bool, Float32
+from std_msgs.msg import String, UInt8, Int32, Bool, Float64
 from .._wrapper import pyWrapper
 
 from pclpy._pcl_visualizer_wrapper_cpp import PCLVisualizerWrapper
@@ -71,10 +71,10 @@ class PCLVisualizer(object):
 		if not (isinstance( ymax, float ) and 0 <= ymax <= 1):
 			rospy.ROSException( 'ymax is not float or not in range 0..1' )
 
-		_xmin = self._to_cpp( Float32(xmin) )
-		_ymin = self._to_cpp( Float32(ymin) )
-		_xmax = self._to_cpp( Float32(xmax) )
-		_ymax = self._to_cpp( Float32(ymax) )
+		_xmin = self._to_cpp( Float64(xmin) )
+		_ymin = self._to_cpp( Float64(ymin) )
+		_xmax = self._to_cpp( Float64(xmax) )
+		_ymax = self._to_cpp( Float64(ymax) )
 
 		_viewport = self._viewer.createViewPort( _xmin, _ymin, _xmax, _ymax )
 		return self._from_cpp(_viewport, Int32).data

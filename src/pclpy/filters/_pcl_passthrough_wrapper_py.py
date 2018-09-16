@@ -1,6 +1,6 @@
 import rospy
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Float32, Bool, String
+from std_msgs.msg import Float64, Bool, String
 from .._wrapper import pyWrapper
 
 from pclpy._pcl_passthrough_wrapper_cpp import PassThroughWrapper
@@ -46,8 +46,8 @@ class PassThrough(object):
 			rospy.ROSException( 'limit_min is not float' )
 		if not isinstance( limit_max, float ):
 			rospy.ROSException( 'limit_max is not float' )
-		_min = self._to_cpp( Float32(limit_min) )
-		_max = self._to_cpp( Float32(limit_max) )
+		_min = self._to_cpp( Float64(limit_min) )
+		_max = self._to_cpp( Float64(limit_max) )
 		self._passthrough.setFilterLimits( _min, _max )
 
 	def setNegative( self, negative ):

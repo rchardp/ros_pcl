@@ -11,7 +11,7 @@ void StatisticalOutlierRemovalWrapper::setMeanK( std::string nr_k )
 
 void StatisticalOutlierRemovalWrapper::setStddevMulThresh( std::string stddev_mult )
 {
-	std_msgs::Float32 _stddev_mult =from_python<std_msgs::Float32>( stddev_mult );
+	std_msgs::Float64 _stddev_mult =from_python<std_msgs::Float64>( stddev_mult );
 	filter.setStddevMulThresh( _stddev_mult.data );
 }
 

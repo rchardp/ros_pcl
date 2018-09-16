@@ -22,13 +22,13 @@ void IterativeClosestPointWrapper::setInputTarget(std::string cloud)
 
 void IterativeClosestPointWrapper::setMaxCorrespondenceDistance(std::string distance_threshold)
 {
-	std_msgs::Float32 _dist = from_python<std_msgs::Float32>( distance_threshold );
+	std_msgs::Float64 _dist = from_python<std_msgs::Float64>( distance_threshold );
 	IterativeClosestPoint::setMaxCorrespondenceDistance( _dist.data );
 }
 
 std::string IterativeClosestPointWrapper::getMaxCorrespondenceDistance()
 {
-	std_msgs::Float32 _dist;
+	std_msgs::Float64 _dist;
 	_dist.data = IterativeClosestPoint::getMaxCorrespondenceDistance();
 	return to_python(_dist);
 }
@@ -47,12 +47,12 @@ std::string IterativeClosestPointWrapper::getMaximumIterations()
 }
 
 void IterativeClosestPointWrapper::setTransformationEpsilon(std::string epsilon) {
-	std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
+	std_msgs::Float64 _epsilon = from_python<std_msgs::Float64>( epsilon );
 	IterativeClosestPoint::setTransformationEpsilon( _epsilon.data );
 }
 
 void IterativeClosestPointWrapper::setEuclideanFitnessEpsilon(std::string epsilon) {
-	std_msgs::Float32 _epsilon = from_python<std_msgs::Float32>( epsilon );
+	std_msgs::Float64 _epsilon = from_python<std_msgs::Float64>( epsilon );
 	IterativeClosestPoint::setEuclideanFitnessEpsilon( _epsilon.data );
 }
 

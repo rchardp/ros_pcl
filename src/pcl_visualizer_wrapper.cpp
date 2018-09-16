@@ -14,13 +14,13 @@ PCLVisualizerWrapper::PCLVisualizerWrapper() :
 
 std::string PCLVisualizerWrapper::createViewPort( std::string xmin, std::string ymin,
 														std::string xmax, std::string ymax ) {
-	std_msgs::Float32 _xmin, _ymin, _xmax, _ymax;
+	std_msgs::Float64 _xmin, _ymin, _xmax, _ymax;
 	std_msgs::Int32 _viewport;
 
-	_xmin = from_python<std_msgs::Float32>( xmin );
-	_ymin = from_python<std_msgs::Float32>( ymin );
-	_xmax = from_python<std_msgs::Float32>( xmax );
-	_ymax = from_python<std_msgs::Float32>( ymax );
+	_xmin = from_python<std_msgs::Float64>( xmin );
+	_ymin = from_python<std_msgs::Float64>( ymin );
+	_xmax = from_python<std_msgs::Float64>( xmax );
+	_ymax = from_python<std_msgs::Float64>( ymax );
 	_viewport.data = 0;
 
 	PCLVisualizer::createViewPort( _xmin.data, _ymin.data,

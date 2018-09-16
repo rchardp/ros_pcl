@@ -11,8 +11,8 @@ void PassThroughWrapper::setFilterFieldName( std::string field_name)
 
 void PassThroughWrapper::setFilterLimits( std::string limit_min, std::string limit_max )
 {
-	std_msgs::Float32 _min =from_python<std_msgs::Float32>( limit_min );
-	std_msgs::Float32 _max =from_python<std_msgs::Float32>( limit_max );
+	std_msgs::Float64 _min =from_python<std_msgs::Float64>( limit_min );
+	std_msgs::Float64 _max =from_python<std_msgs::Float64>( limit_max );
 	filter.setFilterLimits( _min.data, _max.data );
 }
 

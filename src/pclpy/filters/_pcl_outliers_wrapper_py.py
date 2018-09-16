@@ -1,6 +1,6 @@
 import rospy
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Float32, Bool, Int32
+from std_msgs.msg import Float64, Bool, Int32
 from .._wrapper import pyWrapper
 
 from pclpy._pcl_outliers_wrapper_cpp import StatisticalOutlierRemovalWrapper
@@ -44,7 +44,7 @@ class StatisticalOutlierRemoval(object):
 		if not isinstance( stddev_mult, float ):
 			rospy.ROSException( 'stddev_mult is not float' )
 
-		_stddev_mult = self._to_cpp( Float32(stddev_mult) )
+		_stddev_mult = self._to_cpp( Float64(stddev_mult) )
 		self._outliers.setStddevMulThresh( _stddev_mult )
 
 	def setNegative( self, negative ):

@@ -5,9 +5,9 @@ VoxelGridWrapper::VoxelGridWrapper() :
 
 void VoxelGridWrapper::setLeafSize( std::string lx, std::string ly, std::string lz )
 {
-	std_msgs::Float32 _lx = from_python<std_msgs::Float32>( lx );
-	std_msgs::Float32 _ly = from_python<std_msgs::Float32>( ly );
-	std_msgs::Float32 _lz = from_python<std_msgs::Float32>( lz );
+	std_msgs::Float64 _lx = from_python<std_msgs::Float64>( lx );
+	std_msgs::Float64 _ly = from_python<std_msgs::Float64>( ly );
+	std_msgs::Float64 _lz = from_python<std_msgs::Float64>( lz );
 	filter.setLeafSize( _lx.data, _ly.data, _lz.data );
 }
 

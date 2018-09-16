@@ -1,6 +1,6 @@
 import rospy
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Float32, Int32
+from std_msgs.msg import Float64, Int32
 from .._wrapper import pyWrapper
 
 from pclpy._pcl_icp_wrapper_cpp import IterativeClosestPointWrapper
@@ -45,13 +45,13 @@ class IterativeClosestPoint(object):
 		'''
 		if not isinstance(distance_threshold, float):
 			rospy.ROSException( 'distance_threshold is not float' )
-		s_dist = self._to_cpp( Float32(distance_threshold) )
+		s_dist = self._to_cpp( Float64(distance_threshold) )
 		self._icp.setMaxCorrespondenceDistance( s_dist )
 
 	def getMaxCorrespondenceDistance(self):
 		'''Get the maximum distance threshold between two correspondent points in source <-> target
 		'''
-		_dist = self._from_cpp( self._icp.getMaxCorrespondenceDistance(), Float32 )
+		_dist = self._from_cpp( self._icp.getMaxCorrespondenceDistance(), Float64 )
 		return _dist.data
 
 	def setMaximumIterations(self, nr_iterations):
@@ -79,7 +79,7 @@ class IterativeClosestPoint(object):
 		'''
 		if not isinstance(epsilon, float):
 			rospy.ROSException( 'epsilon is not float' )
-		s_epsilon = self._to_cpp( Float32(epsilon) )
+		s_epsilon = self._to_cpp( Float64(epsilon) )
 		self._icp.setTransformationEpsilon(s_epsilon)
 
 	def setEuclideanFitnessEpsilon(self, epsilon):
@@ -90,7 +90,7 @@ class IterativeClosestPoint(object):
 		'''
 		if not isinstance(epsilon, float):
 			rospy.ROSException( 'epsilon is not float' )
-		s_epsilon = self._to_cpp( Float32(epsilon) )
+		s_epsilon = self._to_cpp( Float64(epsilon) )
 		self._icp.setEuclideanFitnessEpsilon(s_epsilon)
 
 	def align(self):

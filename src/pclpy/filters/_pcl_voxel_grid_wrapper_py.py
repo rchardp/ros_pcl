@@ -1,6 +1,6 @@
 import rospy
 from sensor_msgs.msg import PointCloud2
-from std_msgs.msg import Float32
+from std_msgs.msg import Float64
 from .._wrapper import pyWrapper
 
 from pclpy._pcl_voxel_grid_wrapper_cpp import VoxelGridWrapper
@@ -39,9 +39,9 @@ class VoxelGrid(object):
 		if not isinstance( lz, float ):
 			rospy.ROSException( 'lz is not float' )
 
-		_lx = self._to_cpp( Float32(lx) )
-		_ly = self._to_cpp( Float32(ly) )
-		_lz = self._to_cpp( Float32(lz) )
+		_lx = self._to_cpp( Float64(lx) )
+		_ly = self._to_cpp( Float64(ly) )
+		_lz = self._to_cpp( Float64(lz) )
 		self._voxel_grid.setLeafSize( _lx, _ly, _lz )
 
 	def filter(self):
