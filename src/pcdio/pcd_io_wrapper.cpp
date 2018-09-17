@@ -31,7 +31,7 @@ std::string PcdIOWrapper::savePCDFile( std::string fileName, std::string cloud )
 	return to_python( b_ret );
 }
 
-BOOST_PYTHON_MODULE( _pcd_io_wrapper_cpp ) {
+BOOST_PYTHON_MODULE( _pcl_pcdio_wrapper_cpp ) {
 	boost::python::class_<PcdIOWrapper> ( "PcdIOWrapper", boost::python::init<>())
 	.def( "savePCDFile", &PcdIOWrapper::savePCDFile )
 	.def( "loadPCDFile", &PcdIOWrapper::loadPCDFile )

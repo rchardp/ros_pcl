@@ -3,7 +3,7 @@ from sensor_msgs.msg import PointCloud2
 from std_msgs.msg import String, Bool
 from .._wrapper import pyWrapper
 
-from pcl_py._pcd_io_wrapper_cpp import PcdIOWrapper
+from pclpy._pcl_pcdio_wrapper_cpp import PcdIOWrapper
 
 class PcdIO(object):
 	def __init__(self):
