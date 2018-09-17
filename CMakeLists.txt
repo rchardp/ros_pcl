@@ -58,12 +58,12 @@ add_definitions(${PCL_DEFINITIONS})
 
 ## Declare a cpp library
 add_library(_pcl_common_wrapper_cpp src/pcl_common_wrapper.cpp)
-add_library(_pcl_pcdio_wrapper_cpp src/pcdio/pcd_io_wrapper.cpp)
-add_library(_pcl_icp_wrapper_cpp src/registration/pcl_icp_wrapper.cpp)
+add_library(_pcl_pcdio_wrapper_cpp src/pcdio/pcdio_wrapper.cpp)
+add_library(_pcl_icp_wrapper_cpp src/registration/icp_wrapper.cpp)
 add_library(_pcl_visualizer_wrapper_cpp src/visualization/pcl_visualizer_wrapper.cpp)
-add_library(_pcl_voxel_grid_wrapper_cpp src/filters/pcl_voxel_grid_wrapper.cpp)
-add_library(_pcl_passthrough_wrapper_cpp src/filters/pcl_passthrough_wrapper.cpp)
-add_library(_pcl_outliers_wrapper_cpp src/filters/pcl_outliers_wrapper.cpp)
+add_library(_pcl_voxel_grid_wrapper_cpp src/filters/voxel_grid_wrapper.cpp)
+add_library(_pcl_passthrough_wrapper_cpp src/filters/passthrough_wrapper.cpp)
+add_library(_pcl_outliers_wrapper_cpp src/filters/outliers_wrapper.cpp)
 
 
 ## Specify libraries to link a library or executable target against
