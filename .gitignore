@@ -1,5 +1,6 @@
 # ignorar todos los archivos pyc
 *.pyc
 
-# ignorar archivos de documentacion
+# ignorar archivos de edición y docs
 doc/
+raw/
